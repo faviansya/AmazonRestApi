@@ -14,7 +14,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:12345678@0.0.0.0:3306/Ecommerce'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://vian:12345678@ecommerce.c26kug0ctusy.ap-southeast-1.rds.amazonaws.com:3306/Ecommerce'
 app.config['SQLALCHEMY_TRACK_MODIFICATION'] = False
 app.config['JWT_SECRET_KEY'] = 'SFsieaaBsLEpecP675r243faM8oSB2hV'
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=1)
