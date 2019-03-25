@@ -21,10 +21,38 @@ class TransactionResource(Resource):
         pass
 
     @jwt_required
-    def get(self):
+    def get(self,transaction_id = None):
         jwtclaim = get_jwt_claims()
 
+        parser = reqparse.RequestParser()
+        parser.add_argument('transaction_id', type=int, location='args')
+        args = parser.parse_args()
+
+        if(transaction_id == "seller"):
+            qry_seller = Transaction.query.filter(Transaction.owner_id.like(jwtclaim['id'])).all()
+            return {'status' : 'Success',  'Data' : marshal(qry_seller, Transaction.response_field)}, 200, {'Content_type' : 'application/json'}
+
+        if(transaction_id == "confirm"):
+            qry_seller = Transaction.query.get(args["transaction_id"])
+            qry_seller.deliver = "delivered"
+            db.session.commit()
+            return {'status' : 'Success',  'Data' : marshal(qry_seller, Transaction.response_field)}, 200, {'Content_type' : 'application/json'}
+
+
         qry_transaction = Transaction.query.filter(Transaction.user_id.like(jwtclaim['id'])).all()
+        # transaction_marshal = marshal(qry_transaction, Transaction.response_field)
+        # qry_getdata= Transaction.query
+
+        # qry_item = Item.query.get(transaction_marshal['item_id'])
+        # item_marshal = marshal(qry_item, Item.response_field)
+
+        # qry_user = User.query.get(transaction_marshal['user_id'])
+        # user_marshal = marshal(qry_user, User.response_field)
+
+        # rows = []
+        # for row in qry_transaction:
+        #     rows.append(marshal(row, Transaction.response_field))
+
         
         # Transaction_row = []
         # for row in user_qry.limit(args['rp']).offset(offside).all():
@@ -52,7 +80,7 @@ class TransactionResource(Resource):
         qry_owner = User.query.get(item_marshal['post_by'])
         owner_marshal = marshal(qry_owner, User.response_field)
 
-        transaction = Transaction(item_marshal['id'],user_marshal['id'],item_marshal['post_by'],cart_marshal['qty'],"success",str(currentDT))
+        transaction = Transaction(item_marshal['id'],item_marshal['name'],item_marshal['urlimages'],item_marshal['harga'],user_marshal['id'],user_marshal['name'],user_marshal['alamat'],user_marshal['urlimage'],item_marshal['post_by'],owner_marshal['name'],owner_marshal['alamat'],owner_marshal['urlimage'],cart_marshal['qty'],"success",str(currentDT),"undeliver")
         db.session.add(transaction)
 
         

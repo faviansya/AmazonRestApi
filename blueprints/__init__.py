@@ -9,8 +9,10 @@ from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 from flask_jwt_extended import JWTManager
 from datetime import timedelta
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:12345678@0.0.0.0:3306/Ecommerce'
 app.config['SQLALCHEMY_TRACK_MODIFICATION'] = False

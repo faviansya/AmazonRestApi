@@ -22,7 +22,7 @@ class CartResource(Resource):
             return {"status":"you Are Admin, You Dont Have Privileage to SELL something"}, 401, {'Content_type' : 'application/json'}
         parser = reqparse.RequestParser()
         parser.add_argument('p', type = int, location = 'args', default = 1)
-        parser.add_argument('rp', type = int, location = 'args', default = 30)
+        parser.add_argument('rp', type = int, location = 'args', default = 50)
         args = parser.parse_args()
 
         offside = (args['p'] * args['rp']) - args['rp']

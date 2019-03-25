@@ -10,6 +10,7 @@ if __name__ == '__main__':
 
     formatter = logging.Formatter("[%(asctime)s]{%(pathname)s:%(lineno)d} %(levelname)s - %(message)s")
     log_handler = RotatingFileHandler("%s/%s" %(app.root_path, '../storage/log/app.log'), maxBytes = 5000000, backupCount = 10)
+    logging.getLogger('flask_cors').level = logging.DEBUG
     log_handler.setLevel(logging.INFO)
     log_handler.setFormatter(formatter)
     app.logger.addHandler(log_handler)

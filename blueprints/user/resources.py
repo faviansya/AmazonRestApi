@@ -8,7 +8,7 @@ from . import *
 
 bp_user = Blueprint('user', __name__)
 api = Api(bp_user)
-
+       
 class UserResource(Resource):
 
     def __init__(self):
@@ -20,7 +20,7 @@ class UserResource(Resource):
         if user_id == None or user_id == 'all':
             parser = reqparse.RequestParser()
             parser.add_argument('p', type = int, location = 'args', default = 1)
-            parser.add_argument('rp', type = int, location = 'args', default = 10)
+            parser.add_argument('rp', type = int, location = 'args', default = 50)
             parser.add_argument('user_id', type = int, location = 'args')
             args = parser.parse_args()
 
